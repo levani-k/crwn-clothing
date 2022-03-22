@@ -1,0 +1,59 @@
+import { initializeApp } from "firebase/app";
+import {
+  getAuth,
+  signInWithRedirect,
+  signInWithPopup,
+  GoogleAuthProvider,
+} from "firebase/auth";
+import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyCwoP6lIaPq7MKB1I91Tv0rZEvzspV6vO0",
+  authDomain: "crwn-db-28200.firebaseapp.com",
+  projectId: "crwn-db-28200",
+  storageBucket: "crwn-db-28200.appspot.com",
+  messagingSenderId: "622307896",
+  appId: "1:622307896:web:731148866dd210b44cd4cd",
+  measurementId: "G-SYWT8R7T80",
+};
+
+// Initialize Firebase
+const firebaseApp = initializeApp(firebaseConfig);
+
+const provider = new GoogleAuthProvider();
+provider.setCustomParameters({
+  prompt: "select_account",
+});
+
+export const auth = getAuth();
+export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+
+export const db = getFirestore();
+
+export const createUserDocumentfromAuth = async (userAuth) => {
+  const userDocRef = doc(db, "users", userAuth.uid);
+
+  console.log(userDocRef);
+
+  const userSnapshot = await getDoc(userDocRef);
+  console.log("userSnapshot: ", userSnapshot.exists());
+
+  if (!userSnapshot.exists()) {
+    const { displayName, email } = userAuth;
+    const createdAt = new Date();
+
+    try {
+      await setDoc(userDocRef, {
+        displayName,
+        email,
+        createdAt,
+      });
+    } catch (error) {
+      console.log("error creating user: ", error);
+    }
+  }
+
+  return userDocRef;
+};
