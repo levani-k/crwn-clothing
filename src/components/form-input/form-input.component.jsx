@@ -7,7 +7,7 @@ const FormInput = ({ label, ...otherProps }) => {
       <input className="form-input" {...otherProps} />
       {label && (
         <label
-          className={`${otherProps.value.lenght && "shrink"} form-input-label`}
+          className={`${otherProps.value.length && "shrink"} form-input-label`}
         >
           {label}
         </label>
