@@ -1,6 +1,8 @@
-import { useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { CartContext } from "contexts/cart.context";
+
+import { selectCartItems } from "store/cart/cart.selector.js";
+import { setIsCartOpen } from "store/cart/cart.action"
 import CartItem from "components/cart-item/cart-item.component";
 import Button from "components/button/button.component";
 import {
@@ -10,12 +12,14 @@ import {
 } from "./cart-dropdown.styles.js";
 
 const CartDropdown = () => {
-  const { cartItems, setIsCartOpen } = useContext(CartContext);
+  const dispatch = useDispatch()
+  const cartItems = useSelector(selectCartItems)
   const navigate = useNavigate();
 
   const goToCheckoutHandler = () => {
     navigate("/checkout");
-    setIsCartOpen(false);
+    // Close dropdown
+    dispatch(setIsCartOpen(false))
   };
 
   return (
