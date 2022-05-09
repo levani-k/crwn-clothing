@@ -2,11 +2,7 @@ import React, { useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
-import { setCurrentUser } from 'store/user/user.action'
-import {
-  onAuthStateChangedListener,
-  createUserDocumentfromAuth,
-} from 'utils/firebase/firebase.utils'
+import { checkUserSession } from 'store/user/user.action'
 import Navigation from 'routes/navigation/navigation.component'
 import Home from 'routes/home/home.component'
 import Authentication from 'routes/authentication/authentication.component'
@@ -17,13 +13,7 @@ const App = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const unsubcribe = onAuthStateChangedListener((user) => {
-      if (user) {
-        createUserDocumentfromAuth(user)
-      }
-      dispatch(setCurrentUser(user))
-    })
-    return unsubcribe
+    dispatch(checkUserSession())
   }, [dispatch])
 
   return (

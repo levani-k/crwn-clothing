@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  signInWithGooglePopup,
-  signInAuthUserWithEmailAndPassword,
-} from "utils/firebase/firebase.utils";
+import { useDispatch } from "react-redux";
 
 import FormInput from "components/form-input/form-input.component";
 import Button, {
   BUTTON_TYPE_CLASSES,
 } from "components/button/button.component";
+
+import { googleSignInStart, emailSignInStart } from "store/user/user.action.js";
 
 import { SignInContainer, ButtonsContainer } from "./sign-in-form.styles.js";
 
@@ -18,6 +17,7 @@ const defaultFormFields = {
 };
 
 const SignInForm = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate()
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
@@ -27,13 +27,13 @@ const SignInForm = () => {
   };
 
   const signInWithGoogle = async () => {
-    await signInWithGooglePopup();
+    dispatch(googleSignInStart())
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await signInAuthUserWithEmailAndPassword(email, password);
+      dispatch(emailSignInStart(email, password))
       resetFormFields();
       navigate('/')
     } catch (error) {
