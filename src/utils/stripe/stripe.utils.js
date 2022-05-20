@@ -1,4 +1,3 @@
 import { loadStripe } from '@stripe/stripe-js'
-import config from 'config/config'
 
-export const stripePromise = loadStripe(config.STRIPE_PUBLIC_KEY)
+export const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY)
