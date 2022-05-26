@@ -18,21 +18,25 @@ type CategoryPreviewProps = {
   products: Product[]
 }
 
-const CategoryPreview: FC<CategoryPreviewProps> = ({ title, products }) => (
-  <CategoryPreviewContainer>
-    <h2>
-      <CategoryPreviewTitle to={title}>
-        {title.toUpperCase()}
-      </CategoryPreviewTitle>
-    </h2>
-    <CategoryPreviewWrapper>
-      {products
-        .filter((_, index: number) => index < 4)
-        .map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-    </CategoryPreviewWrapper>
-  </CategoryPreviewContainer>
-)
+const CategoryPreview: FC<CategoryPreviewProps> = ({ title, products }) => {
+  const handleRedirect = () => window.scrollTo({ top: 0, behavior: 'smooth' })
+
+  return (
+    <CategoryPreviewContainer>
+      <h2>
+        <CategoryPreviewTitle to={title} onClick={handleRedirect}>
+          {title.toUpperCase()}
+        </CategoryPreviewTitle>
+      </h2>
+      <CategoryPreviewWrapper>
+        {products
+          .filter((_, index: number) => index < 4)
+          .map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+      </CategoryPreviewWrapper>
+    </CategoryPreviewContainer>
+  )
+}
 
 export default CategoryPreview
