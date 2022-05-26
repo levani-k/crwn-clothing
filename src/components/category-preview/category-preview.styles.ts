@@ -19,6 +19,7 @@ export const CategoryPreviewTitle = styled(Link)`
 export const CategoryPreviewWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  gap: 20px;
 
   @media screen and (max-width: 800px) {
     display: grid;
