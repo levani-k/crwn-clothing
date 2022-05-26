@@ -10,7 +10,6 @@ import { stripePromise } from 'utils/stripe/stripe.utils'
 
 import App from './App'
 
-import './index.scss'
 import reportWebVitals from './reportWebVitals'
 
 ReactDOM.render(
